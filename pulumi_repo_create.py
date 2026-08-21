@@ -37,6 +37,10 @@ CONFIG_FILE = "config/platform_team_values.yaml"
 with open(CONFIG_FILE) as f:
     data = yaml.safe_load(f)
 
+required_approving_review_count: int = data.get("branch_protection", {}).get(
+    "required_approving_review_count", 1
+)
+
 # ── GitHub provider ───────────────────────────────────────────────────────────
 # Credentials come from Pulumi config (set via `pulumi config set`).
 # The token is pulled from Bitwarden by your CI/CD pipeline or loaded
@@ -84,7 +88,7 @@ for repo_def in data.get("github_repositories", []):
         required_pull_request_reviews=[
             github.BranchProtectionRequiredPullRequestReviewArgs(
                 dismiss_stale_reviews=True,
-                required_approving_review_count=1,
+                required_approving_review_count=required_approving_review_count,
             )
         ],
         opts=ResourceOptions(

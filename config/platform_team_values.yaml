@@ -56,6 +56,16 @@ github_repositories:
   #   visibility: public
 
 
+# ── Branch Protection ─────────────────────────────────────────────────────────
+# Applies to the "main" branch of every repository above.
+# required_approving_review_count: 0 while solo-maintaining with a single
+# GitHub account (self-approval isn't allowed and enforce_admins blocks
+# bypassing it). Raise back to 1+ once a second reviewer/collaborator exists.
+# ------------------------------------------------------------------------------
+branch_protection:
+  required_approving_review_count: 0
+
+
 # ── GitHub Organization Members ───────────────────────────────────────────────
 # Each entry adds (or updates) a member in your GitHub organization.
 # Supported fields:

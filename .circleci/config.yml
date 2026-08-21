@@ -37,7 +37,6 @@ jobs:
   # Provides CI feedback on infrastructure changes before approval
   pulumi-preview:
     executor: pulumi/default
-    context: *context
     steps:
       - checkout
       - python/install:
@@ -47,18 +46,10 @@ jobs:
           stack: dev
           args: "--color always --non-interactive"
 
-  # Manual approval step: Requires human approval before deployment
-  # Prevents accidental production changes
-  approve-deployment:
-    type: approval
-    requires:
-      - pulumi-preview
-
   # Update/Deploy job: Applies infrastructure changes to production
   # Only runs after explicit approval on version tags
   pulumi-up:
     executor: pulumi/default
-    context: *context
     steps:
       - checkout
       - python/install:
@@ -75,6 +66,7 @@ workflows:
     jobs:
       - pulumi-preview:
           <<: *push_main
+          context: *context
 
   # Production deployment workflow: Runs on version tags
   # Executes full preview -> approval -> deploy pipeline
@@ -82,11 +74,19 @@ workflows:
     jobs:
       - pulumi-preview:
           <<: *tag_main
+          context: *context
+
+      # Manual approval step: Requires human approval before deployment
+      # Prevents accidental production changes. `approval` jobs are a
+      # CircleCI built-in and must not be declared under top-level `jobs:`.
       - approve-deployment:
           <<: *tag_main
+          type: approval
           requires:
             - pulumi-preview
+
       - pulumi-up:
           <<: *tag_main
+          context: *context
           requires:
             - approve-deployment

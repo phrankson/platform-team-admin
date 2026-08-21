@@ -1,0 +1,10 @@
+[project]
+name = "platform-team-administration"
+version = "0.1.0"
+description = "A minimal Python Pulumi program"
+requires-python = ">=3.9"
+dependencies = [
+    "pulumi>=3.0.0,<4.0.0",
+    "pulumi-github>=6.13.1",
+    "pyyaml>=6.0.3",
+]

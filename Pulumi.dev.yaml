@@ -1,0 +1,4 @@
+config:
+  github:owner: phrankson
+  github:token:
+    secure: AAABAAnrdCJO2nCzk22envOfRS8Dr0aP9HfRtpIFGcw/kooJfeBa57ArCfa6O81VtsJaMXUqCVN60aW7Hwr3T8z7MxUglMsK

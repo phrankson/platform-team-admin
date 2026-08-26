@@ -57,6 +57,16 @@ github_repositories:
       which repositories/paths Argo CD should watch and deploy.
     visibility: public
 
+  # Platform services and extensions — the actual Helm-deployed workloads
+  # (service mesh, databases, etc.) that platform-gitops' Application CRDs
+  # point at. Structured base + per-environment Kustomize overlays.
+  - name: platform-services
+    description: >
+      Platform services and extensions deployed via Helm/Kustomize —
+      service mesh, shared runtime services, and cluster-behavior
+      extensions — referenced by platform-gitops.
+    visibility: public
+
   # Add new repositories below this line as the platform grows.
   # Example:
   # - name: platform-observability

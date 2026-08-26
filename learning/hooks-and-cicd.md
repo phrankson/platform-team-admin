@@ -181,4 +181,5 @@ Every repo this department issues a permit for is still an empty parcel —
 nothing has been built on it yet. The next repo in this project,
 `platform-core`, is where something actually gets constructed inside one of
 those parcels: real Kubernetes clusters, running on your own machine. See
-`platform-core`'s learning companion for that half of the story.
+[`platform-core`'s learning companion](../../platform-core/learning/README.md)
+for that half of the story.

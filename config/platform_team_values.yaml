@@ -49,6 +49,14 @@ github_repositories:
       that extend the core platform without modifying it directly.
     visibility: public
 
+  # GitOps coordination hub — Argo CD's "App of Apps" root: a catalog of
+  # pointers to team/service repos, not application manifests itself.
+  - name: platform-gitops
+    description: >
+      GitOps coordination hub for Argo CD's App of Apps pattern — declares
+      which repositories/paths Argo CD should watch and deploy.
+    visibility: public
+
   # Add new repositories below this line as the platform grows.
   # Example:
   # - name: platform-observability

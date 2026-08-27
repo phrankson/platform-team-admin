@@ -71,6 +71,50 @@ construction harder. It's the only way consistency and safety survive
 contact with more than one team, because it moves the guarantee from "a
 person remembers" to "a machine enforces."
 
+## Bounded contexts: why four repos, not one
+
+This project is split into four separate repos: `platform-team-administration`,
+`platform-core`, `platform-gitops`, and `platform-services`. That split
+isn't arbitrary. There's a concept from software design that explains why
+it's the right call: bounded contexts, from Domain-Driven Design.
+
+Here's the idea. A domain is the whole problem you're solving — in this
+case, running a platform that other engineering teams build on. Different
+parts of that problem need different models and different vocabulary to do
+their job well. A bounded context is a boundary drawn around one part of
+the system where a word has exactly one meaning. Cross that boundary into
+another part of the system, and the same word can mean something
+completely different. That's not a flaw in the design. It's the point.
+
+You can see this happening right now with the word "environment":
+
+- In `platform-core`, an environment (`platform-sandbox`, `app-dev`,
+  `app-prod`) is an entire, separate Kind cluster — its own Docker network,
+  its own control plane, its own compute.
+- In `platform-gitops`, an environment is just a folder —
+  `environments/platform-sandbox/` — that Argo CD watches. No cluster, no
+  network, no compute. Just a path in a repo.
+
+Both definitions are correct within their own repo. If you tried to force
+one single definition of "environment" across the whole project, you
+wouldn't make things clearer. You'd make each repo's model worse, because
+`platform-gitops` has no reason to know what a Docker network is, and
+`platform-core` has no reason to know what a Kustomize overlay is. Keeping
+the boundary sharp is what keeps each repo's own language simple.
+
+This is also why each repo is free to name things however makes sense for
+its own job, without trying to match another repo's naming or structure. A
+repo doesn't owe another repo's model any resemblance. It only owes the
+boundary a clean, narrow interface.
+
+That interface is called a context map in Domain-Driven Design — how two
+bounded contexts connect without merging their models. Here, the context
+map between `platform-core` and `platform-gitops` is a single object: an
+Argo `Application`, carrying just a repo URL and a path. `platform-core`
+never needs to understand `platform-gitops`'s folder structure or tenant
+setup to hand off to it. The interface is deliberately that thin. You'll
+see this same object again in `platform-core`'s learning companion.
+
 ## Why "as code" specifically — the idea underneath every file in this repo
 
 Every one of the four department functions above could, in theory, be done

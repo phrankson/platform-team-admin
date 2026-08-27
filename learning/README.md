@@ -71,6 +71,47 @@ construction harder. It's the only way consistency and safety survive
 contact with more than one team, because it moves the guarantee from "a
 person remembers" to "a machine enforces."
 
+## The five pillars of platform engineering
+
+The platform team idea from the last section has a fuller shape to it, one
+that shows up fairly consistently across the industry. Most descriptions of
+platform engineering name five responsibilities:
+
+1. Self-service. A team that needs something from the platform should be
+   able to get it by declaring what they need, not by filing a ticket and
+   waiting for a person to do it for them.
+2. Golden paths, also called paved roads. A well-supported default way of
+   doing something, easy to follow and hard to get wrong by accident, so
+   nobody has to reinvent it themselves.
+3. Developer experience. Reducing the friction and cognitive load on the
+   people using the platform, so their time goes toward their own work
+   instead of learning platform internals they don't need to know.
+4. Platform as a product. Treating the platform team's output as a real
+   product with real customers, not an internal utility nobody has to
+   think about improving.
+5. Built-in operability. A platform should be observable and operable from
+   the start, not something that gets bolted on after it's already running.
+
+Self-service is what `platform_team_values.yaml` actually buys you: a team
+that wants a new repo adds one line to that file and opens a pull request.
+Nobody on the platform team creates it by hand. The golden path is the
+four-repo chain this whole project builds — a team that wants a cluster, a
+deployment pipeline, and a service mesh doesn't have to invent any of that,
+because the pattern already exists to follow. Developer experience is why
+the CI/CD pipelines described later in this doc put approval gates at only
+one point instead of scattering them everywhere: keeping most changes fast
+matters as much as keeping the risky ones safe. Platform as a product is
+the idea from the previous section made concrete — whether this repo is
+any good gets measured by whether other teams actually want to use it, not
+just by whether it technically runs.
+
+Built-in operability is worth being honest about: this project doesn't
+have it. There's no monitoring, no alerting, and no dashboard showing
+whether any of these clusters are healthy right now, beyond running a
+command by hand and reading the output. That's a real gap, not something
+this project demonstrates, and it's worth knowing the difference between a
+pillar you can actually see working here and one that's just named.
+
 ## Bounded contexts: why four repos, not one
 
 This project is split into four separate repos: `platform-team-administration`,

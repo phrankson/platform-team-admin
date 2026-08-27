@@ -155,6 +155,28 @@ $ gh api repos/phrankson/platform-team-admin/branches/main/protection \
 }
 ```
 
+## Governance at scale
+
+Branch protection here is a small example of a pattern that matters a lot
+more once an organization gets bigger. At a small enough scale, a team
+lead can personally review every pull request and remember every rule that
+applies. That stops being possible once there are dozens of teams and
+hundreds of repos. Nobody can hold all of that in their head, and nobody
+should have to.
+
+Governance at scale means the rules get enforced by the platform itself,
+uniformly, regardless of team size, seniority, or how busy someone is that
+week. That's exactly what's happening here: the branch protection rule in
+`platform_team_values.yaml` gets applied to every repo the moment it's
+created, not because a person remembers to set it up each time.
+
+This pattern shows up again later in a more general form. Branch
+protection only governs how code gets merged. `platform-services`'s
+policy-as-code setup governs what actually gets deployed to a cluster —
+rejecting a manifest that uses an unpinned image tag, for example. Same
+idea, applied one layer further down the pipeline: a rule written once,
+enforced automatically, everywhere it applies.
+
 Continue to [**Hooks and CI/CD**](hooks-and-cicd.md) for the other layer of
 enforcement — the one that happens *before* a commit ever reaches GitHub at
 all — plus secrets management and the deployment pipeline.

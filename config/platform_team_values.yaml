@@ -67,6 +67,17 @@ github_repositories:
       extensions — referenced by platform-gitops.
     visibility: public
 
+  # Beginner-to-intermediate guide to this platform — a standalone book, not
+  # a repo's own docs. Sits alongside every other repo's learning/ and docs/
+  # trees rather than replacing them; reads as one continuous story across
+  # all four (eventually six) repos instead of being organized repo-by-repo.
+  - name: platform-guide
+    description: >
+      A beginner-to-intermediate guide to this platform, written as one
+      continuous book — concepts, analogies, and hands-on practice woven
+      together across all four repos.
+    visibility: public
+
   # Add new repositories below this line as the platform grows.
   # Example:
   # - name: platform-observability
